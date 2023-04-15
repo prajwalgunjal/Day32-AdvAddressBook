@@ -1,0 +1,139 @@
+# UC1 :-  Ability to create a Address Book Service DB
+sql-->>   create database addressBook;
+output-->>
+15:38:41	create database addressBook	1 row(s) affected	0.000 sec
+
+
+# UC2 :- Ability to create a Address Book Table with first and last names, address, city, state, zip, phone number and email as its attributes.
+use addressBook;
+sql-->>    create table addressbook(first_name varchar(40) not null,
+						last_name varchar(40) not null ,
+						address varchar(40),
+                        city varchar(40),
+                        state varchar(40),
+                        zip int,
+                        phone_number long,
+                        email varchar(40));
+
+output-->> 15:42:53	create table addressbook(first_name varchar(40) not null,last_name varchar(40) not null ,address varchar(40), varchar(40),state varchar(40),zip int,phone_number long,email varchar(40))0 row(s) affected	0.015 sec
+
+
+# UC 3: Ability to insert new Contacts to Address Book
+insert into addressBook(first_name,last_name,address,city,state,zip,phone_number,email) value
+("jagu","bai","sidko","nashik","maharashtra",40001,784512589,"jagubai@gmail.com")
+,("rutik","gaikwad","kasarwadi","pune","maharashtra",411034,7894561230,"Rutik@gmail.com"),
+("arpit","patil","rahtni","pune","maharashtra",411029,8928038762,"Arpit@gmail.com"),
+("prasad","lomte","akurdi","pune","maharashtra",411025,9421013180,"Prasad@gmail.com"),
+("hitesh","wagh","sinner","nashik","maharashtra",41178,8844662578,"Hitesh@gmail.com");
+
+select* from addressBook;
+
+output-->>
+15:48:53	insert into addressBook(first_name,last_name,address,city,state,zip,phone_number,email) value ("jagu","bai","sidko","nashik","maharashtra",40001,784512589,"jagubai@gmail.com") ,("rutik","gaikwad","kasarwadi","pune","maharashtra",411034,7894561230,"Rutik@gmail.com"), ("arpit","patil","rahtni","pune","maharashtra",411029,8928038762,"Arpit@gmail.com"), ("prasad","lomte","akurdi","pune","maharashtra",411025,9421013180,"Prasad@gmail.com"), ("hitesh","wagh","sinner","nashik","maharashtra",41178,8844662578,"Hitesh@gmail.com")	5 row(s) affected Records: 5  Duplicates: 0  Warnings: 0	0.016 sec
+------------------------------------------------------------------------------------------------------------------
+jagu	|   bai	    |   sidko	    |   nashik	|   maharashtra	|   40001	|   784512589	|   jagubai@gmail.com
+rutik	|   gaikwad	|   kasarwadi	|   pune	|   maharashtra	|   411034	|   7894561230	|   Rutik@gmail.com
+arpit	|   patil	|   rahtni	    |   pune	|   maharashtra	|   411029	|   8928038762	|   Arpit@gmail.com
+prasad	|   lomte	|   akurdi	    |   pune	|   maharashtra	|   411025	|   9421013180	|   Prasad@gmail.com
+hitesh	|   wagh	|   sinner	    |   nashik	|   maharashtra	|   41178	|   8844662578	|   Hitesh@gmail.com
+------------------------------------------------------------------------------------------------------------------
+
+#uc4 :- Ability to edit existing contact person using their name
+
+update addressBook set phone_number=333333333 where first_name ="prajwal";
+output--> 15:55:32	update addressBook set phone_number=333333333 where first_name ="jagu"	1 row(s) affected Rows matched: 1  Changed: 1  Warnings: 0	0.000 sec
+-----------------------------------------------------------------------------------------------------------------------------------
+jagu	|   bai		|   sidko		|   nashik		|   maharashtra		|   40001		|   333333333		|   jagubai@gmail.com
+rutik	|   gaikwad	|   kasarwadi	|  	pune	    |   maharashtra	    |   411034		|   7894561230		|   Rutik@gmail.com
+arpit	|   patil	|   rahtni	    |   pune	    |   maharashtra	    |   411029	    |   8928038762	    |   Arpit@gmail.com
+prasad	|   lomte	|   akurdi	    |   pune	    |   maharashtra	    |   411025	    |   9421013180	    |   Prasad@gmail.com
+hitesh	|   wagh	|   sinner	    |   nashik	    |   maharashtra	    |   41178	    |   8844662578	    |   Hitesh@gmail.com
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+#uc5 :- Ability to delete a person using person's name
+
+delete from addressBook where first_name ="hitesh";
+15:59:44	delete from addressBook where first_name ="hitesh"	1 row(s) affected	0.016 sec
+-----------------------------------------------------------------------------------------------------------------------------------
+jagu	|   bai		|   sidko		|   nashik		|   maharashtra		|   40001		|   333333333		|   jagubai@gmail.com
+rutik	|   gaikwad	|   kasarwadi	|  	pune	    |   maharashtra	    |   411034		|   7894561230		|   Rutik@gmail.com
+arpit	|   patil	|   rahtni	    |   pune	    |   maharashtra	    |   411029	    |   8928038762	    |   Arpit@gmail.com
+prasad	|   lomte	|   akurdi	    |   pune	    |   maharashtra	    |   411025	    |   9421013180	    |   Prasad@gmail.com
+-----------------------------------------------------------------------------------------------------------------------------------
+
+# uc 6 :-Ability to Retrieve Person belonging to a City or State from the Address Book
+
+select city ,state from addressBook where first_name ="jagu";
+16:01:37	select city ,state from addressBook where first_name ="jagu" LIMIT 0, 1000	1 row(s) returned	0.000 sec / 0.000 sec
+--------------------
+city	|   state
+nashik	|   maharashtra
+--------------------
+
+# uc 7: - Ability to understand the size of address book by City and State
+select count(city),count(state) from addressBook where city ="pune" and state="maharashtra";
+16:04:42	select count(city),count(state) from addressBook where city ="pune" and state="maharashtra" LIMIT 0, 1000	1 row(s) returned	0.000 sec / 0.000 sec
+--------------------
+city	|   state
+3	    |   3
+--------------------
+
+
+# uc8:- Ability to retrieve entries sorted alphabetically by Person’s name for a given city
+select first_name from addressBook where city ="pune" order by first_name asc;
+16:06:54	select first_name from addressBook where city ="pune" order by first_name asc LIMIT 0, 1000	3 row(s) returned	0.000 sec / 0.000 sec
+--------------------
+first_name
+arpit
+prasad
+rutik
+--------------------
+
+#UC9 :- Ability to identify each Address Book with name and Type.
+alter table addressBook add address_book_name varchar(20) after last_name;
+alter table addressBook add type varchar(20) after address_book_name;
+update addressBook set address_book_name = "abc" , type = "Family"
+where first_name in("jagu","arpit");
+update addressBook set address_book_name = "xyz" , type = "Friends"
+where first_name in("prasad","hitesh","rutik");
+select* from addressBook;
+______________________________________________________________________________________________________________________________________
+jagu	|   bai	|   abc	|   Family	|   sidko	|   nashik	|   maharashtra	|   40001	|   333333333	|   jagubai@gmail.com
+rutik	| gaikwad| xyz  |   Friends	| kasarwadi |   pune	|   maharashtra	|   411034	|   7894561230	|   Rutik@gmail.com
+arpit	|   patil|	abc	|   Family	|   rahtni	|   pune	|   maharashtra	|   411029	|   8928038762	|   Arpit@gmail.com
+prasad	|   lomte|  xyz	|   Friends	|   akurdi	|   pune	|   maharashtra	|   411025	|   9421013180	|   Prasad@gmail.com
+______________________________________________________________________________________________________________________________________
+
+
+#uc 10 : Ability to get number of contact persons i.e. count by type
+
+select count(type) from addressBook
+where type = "Family";
+--------------------
+count(type)
+2
+--------------------
+select count(type) from addressBook
+where type = "Friends";
+--------------------
+count(type)
+2
+--------------------
+
+
+# uc 11 Ability to add person to both Friend and Family
+insert into addressBook(first_name,last_name,address_book_name,type,address,city,state,zip,phone_number,email)
+values("Rutik","Hajare","abc","Family","Thane","Thane","Maharashtra",423134,234323,"hajare11@gmail.com"),
+("Vishal","Paul","xyz","Friends","Ghatkopar","Thane","Maharashtra",4567891,2343,"paul65@yahoo.in");
+select *from addressBook;
+
+jagu	|   bai	|   abc	|   Family	|   sidko	|   nashik	|   maharashtra	|   40001	|   333333333	|   jagubai@gmail.com
+rutik	|gaikwad|   xyz	|   Friends	|  kasarwadi|   pune	|   maharashtra	|   411034	|   7894561230	|  	Rutik@gmail.com
+arpit	| patil	|   abc	|   Family	|   rahtni	|   pune	|   maharashtra	|  411029	|   8928038762  | 	Arpit@gmail.com
+prasad	|lomte  |   xyz	|   Friends	|   akurdi	|   pune	|   maharashtra	|   411025	|   9421013180	|   Prasad@gmail.com
+Rutik	|Hajare	|   abc	|   Family	|   Thane	|   Thane	|   Maharashtra	|   423134	|   234323	    |   hajare11@gmail.com
+Vishal	| Paul	|   xyz	|   Friends	|  Ghatkopar|   Thane	|   Maharashtra	|   4567891	|   2343	    |   paul65@yahoo.in
+
+
+
